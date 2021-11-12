@@ -1,9 +1,15 @@
 //a material ui context menu component
 import { Button, Menu, MenuItem } from "@material-ui/core";
 import React from "react";
-import PopupState, { bindTrigger, bindMenu } from "material-ui-popup-state";
 
-const ContextMenu: React.FC = ({ children }) => {
+interface SelectedTextContextMenuProps {
+  menuItems?: {
+    label: JSX.Element | string;
+    onClick?: () => void;
+  }[];
+}
+
+const SelectedTextContextMenu: React.FC<SelectedTextContextMenuProps> = ({ children, menuItems }) => {
   const [contextMenu, setContextMenu] = React.useState<{
     mouseX: number;
     mouseY: number;
@@ -44,36 +50,18 @@ const ContextMenu: React.FC = ({ children }) => {
           anchorReference="anchorPosition"
           anchorPosition={contextMenu !== null ? { top: contextMenu.mouseY, left: contextMenu.mouseX } : undefined}
         >
-          <MenuItem
-            onClick={() => {
-              handleClose();
-              document.execCommand("copy");
-            }}
-          >
-            Copy
-          </MenuItem>
-          <MenuItem
-            onClick={() => {
-              handleClose();
-              print();
-            }}
-          >
-            Print
-          </MenuItem>
-          <MenuItem
-            onClick={() => {
-              handleClose();
-            }}
-          >
-            Highlight
-          </MenuItem>
-          <MenuItem
-            onClick={() => {
-              handleClose();
-            }}
-          >
-            Email
-          </MenuItem>
+          {menuItems &&
+            menuItems.map((menuItem, index) => (
+              <MenuItem
+                key={index}
+                onClick={() => {
+                  handleClose();
+                  menuItem.onClick?.();
+                }}
+              >
+                {menuItem.label}
+              </MenuItem>
+            ))}
         </Menu>
       </React.Fragment>
       {children}
@@ -81,4 +69,4 @@ const ContextMenu: React.FC = ({ children }) => {
   );
 };
 
-export default ContextMenu;
+export default SelectedTextContextMenu;

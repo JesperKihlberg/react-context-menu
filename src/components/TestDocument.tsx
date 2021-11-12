@@ -1,15 +1,17 @@
 import { Paper, Box, Grid, Typography, Link } from "@material-ui/core";
 import * as React from "react";
 
-interface TestDocumentProps {}
+interface TestDocumentProps {
+  title: string;
+}
 
 export default function TestDocument(props: TestDocumentProps) {
   return (
     <Paper style={{ margin: 20, padding: 20 }}>
       <Typography component="h1" variant="h3" color="inherit" gutterBottom>
-        Header
+        {props.title}
       </Typography>
-      <Typography component="body">
+      <Typography>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse venenatis, tellus ac pretium euismod, orci mauris fermentum
         purus, vel tempus neque felis in enim. Nullam lacus purus, dignissim ut mauris et, vulputate viverra dui. Proin et arcu id nisl
         porta vehicula luctus sit amet risus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Lorem

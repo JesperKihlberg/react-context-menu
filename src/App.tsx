@@ -1,6 +1,7 @@
 import { AppBar, Avatar, Button, createStyles, Icon, IconButton, makeStyles, SvgIcon, Toolbar, Typography } from "@material-ui/core";
 import React from "react";
-import ContextMenu from "./components/ContextMenu";
+import BasicContextMenu from "./components/BasicContextMenu";
+import SelectedTextContextMenu from "./components/SelectedTextContextMenu";
 import TestDocument from "./components/TestDocument";
 
 const useStyles = makeStyles(() =>
@@ -23,6 +24,15 @@ const useStyles = makeStyles(() =>
 
 const App: React.FC = () => {
   const classes = useStyles();
+  const menuItems = [
+    {
+      onClick: () => document.execCommand("copy"),
+      label: "Copy",
+    },
+    { onClick: () => print(), label: "Print" },
+    { label: "Highlight" },
+    { label: "Email" },
+  ];
   return (
     <div>
       <div className="App">
@@ -35,9 +45,12 @@ const App: React.FC = () => {
           </Toolbar>
         </AppBar>
       </div>
-      <ContextMenu>
-        <TestDocument />
-      </ContextMenu>
+      <SelectedTextContextMenu menuItems={menuItems}>
+        <TestDocument title="SelectedTextContextMenu" />
+      </SelectedTextContextMenu>
+      <BasicContextMenu menuItems={menuItems}>
+        <TestDocument title="BasicContextMenu" />
+      </BasicContextMenu>
     </div>
   );
 };
