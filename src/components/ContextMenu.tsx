@@ -10,18 +10,26 @@ const ContextMenu: React.FC = ({ children }) => {
   } | null>(null);
 
   const handleContextMenu = (event: React.MouseEvent) => {
-    event.preventDefault();
-    setContextMenu(
-      contextMenu === null
-        ? {
-            mouseX: event.clientX - 2,
-            mouseY: event.clientY - 4,
-          }
-        : // repeated contextmenu when it is already open closes it with Chrome 84 on Ubuntu
-          // Other native context menus might behave different.
-          // With this behavior we prevent contextmenu from the backdrop to re-locale existing context menus.
-          null
-    );
+    var selObj = window.getSelection();
+    console.log(selObj, selObj?.toString());
+    if (contextMenu !== null) {
+      event.preventDefault();
+      setContextMenu(null);
+    }
+    if (selObj?.toString()) {
+      event.preventDefault();
+      setContextMenu(
+        contextMenu === null
+          ? {
+              mouseX: event.clientX - 2,
+              mouseY: event.clientY - 4,
+            }
+          : // repeated contextmenu when it is already open closes it with Chrome 84 on Ubuntu
+            // Other native context menus might behave different.
+            // With this behavior we prevent contextmenu from the backdrop to re-locale existing context menus.
+            null
+      );
+    }
   };
 
   const handleClose = () => {
