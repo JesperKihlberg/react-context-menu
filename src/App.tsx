@@ -1,5 +1,7 @@
 import { AppBar, Avatar, Button, createStyles, Icon, IconButton, makeStyles, SvgIcon, Toolbar, Typography } from "@material-ui/core";
 import React from "react";
+import ContextMenu from "./components/ContextMenu";
+import TestDocument from "./components/TestDocument";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -33,6 +35,9 @@ const App: React.FC = () => {
           </Toolbar>
         </AppBar>
       </div>
+      <ContextMenu>
+        <TestDocument />
+      </ContextMenu>
     </div>
   );
 };
